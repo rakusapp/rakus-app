@@ -10,33 +10,43 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as LicaoLessonIdRouteImport } from './routes/licao.$lessonId'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LicaoLessonIdRoute = LicaoLessonIdRouteImport.update({
+  id: '/licao/$lessonId',
+  path: '/licao/$lessonId',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/licao/$lessonId': typeof LicaoLessonIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/licao/$lessonId': typeof LicaoLessonIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/licao/$lessonId': typeof LicaoLessonIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/licao/$lessonId'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/licao/$lessonId'
+  id: '__root__' | '/' | '/licao/$lessonId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  LicaoLessonIdRoute: typeof LicaoLessonIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +58,19 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/licao/$lessonId': {
+      id: '/licao/$lessonId'
+      path: '/licao/$lessonId'
+      fullPath: '/licao/$lessonId'
+      preLoaderRoute: typeof LicaoLessonIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  LicaoLessonIdRoute: LicaoLessonIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
