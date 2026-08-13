@@ -31,7 +31,7 @@ Sidebar fixa no desktop; bottom nav no mobile (Aprender, Revisar, Questões, Des
 
 ## Design
 
-Branco/neutros suaves, tipografia forte, cards arredondados, sombras sutis, animações suaves. Acento clínico (azul-petróleo/índigo profundo) com um secundário quente para conquistas — sem verde Duolingo, sem estética infantil. Logo tipográfico "Rakus" e mote "Medicina, uma questão de cada vez."
+Branco/neutros suaves, tipografia forte, cards arredondados, sombras sutis, animações suaves. Acento clínico (verde musgo) com um secundário quente para conquistas — sem verde Duolingo, sem estética infantil. Logo tipográfico "Rakus" e mote "Medicina, uma questão de cada vez."
 
 ## Detalhes técnicos
 
