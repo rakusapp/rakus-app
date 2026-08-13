@@ -10,11 +10,47 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as DesempenhoRouteImport } from './routes/desempenho'
+import { Route as MissoesRouteImport } from './routes/missoes'
+import { Route as ProRouteImport } from './routes/pro'
+import { Route as QuestoesRouteImport } from './routes/questoes'
+import { Route as RankingRouteImport } from './routes/ranking'
+import { Route as RevisarRouteImport } from './routes/revisar'
 import { Route as LicaoLessonIdRouteImport } from './routes/licao.$lessonId'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DesempenhoRoute = DesempenhoRouteImport.update({
+  id: '/desempenho',
+  path: '/desempenho',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MissoesRoute = MissoesRouteImport.update({
+  id: '/missoes',
+  path: '/missoes',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProRoute = ProRouteImport.update({
+  id: '/pro',
+  path: '/pro',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const QuestoesRoute = QuestoesRouteImport.update({
+  id: '/questoes',
+  path: '/questoes',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RankingRoute = RankingRouteImport.update({
+  id: '/ranking',
+  path: '/ranking',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RevisarRoute = RevisarRouteImport.update({
+  id: '/revisar',
+  path: '/revisar',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LicaoLessonIdRoute = LicaoLessonIdRouteImport.update({
@@ -25,27 +61,76 @@ const LicaoLessonIdRoute = LicaoLessonIdRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/desempenho': typeof DesempenhoRoute
+  '/missoes': typeof MissoesRoute
+  '/pro': typeof ProRoute
+  '/questoes': typeof QuestoesRoute
+  '/ranking': typeof RankingRoute
+  '/revisar': typeof RevisarRoute
   '/licao/$lessonId': typeof LicaoLessonIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/desempenho': typeof DesempenhoRoute
+  '/missoes': typeof MissoesRoute
+  '/pro': typeof ProRoute
+  '/questoes': typeof QuestoesRoute
+  '/ranking': typeof RankingRoute
+  '/revisar': typeof RevisarRoute
   '/licao/$lessonId': typeof LicaoLessonIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/desempenho': typeof DesempenhoRoute
+  '/missoes': typeof MissoesRoute
+  '/pro': typeof ProRoute
+  '/questoes': typeof QuestoesRoute
+  '/ranking': typeof RankingRoute
+  '/revisar': typeof RevisarRoute
   '/licao/$lessonId': typeof LicaoLessonIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/licao/$lessonId'
+  fullPaths:
+    | '/'
+    | '/desempenho'
+    | '/missoes'
+    | '/pro'
+    | '/questoes'
+    | '/ranking'
+    | '/revisar'
+    | '/licao/$lessonId'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/licao/$lessonId'
-  id: '__root__' | '/' | '/licao/$lessonId'
+  to:
+    | '/'
+    | '/desempenho'
+    | '/missoes'
+    | '/pro'
+    | '/questoes'
+    | '/ranking'
+    | '/revisar'
+    | '/licao/$lessonId'
+  id:
+    | '__root__'
+    | '/'
+    | '/desempenho'
+    | '/missoes'
+    | '/pro'
+    | '/questoes'
+    | '/ranking'
+    | '/revisar'
+    | '/licao/$lessonId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  DesempenhoRoute: typeof DesempenhoRoute
+  MissoesRoute: typeof MissoesRoute
+  ProRoute: typeof ProRoute
+  QuestoesRoute: typeof QuestoesRoute
+  RankingRoute: typeof RankingRoute
+  RevisarRoute: typeof RevisarRoute
   LicaoLessonIdRoute: typeof LicaoLessonIdRoute
 }
 
@@ -56,6 +141,48 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/desempenho': {
+      id: '/desempenho'
+      path: '/desempenho'
+      fullPath: '/desempenho'
+      preLoaderRoute: typeof DesempenhoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/missoes': {
+      id: '/missoes'
+      path: '/missoes'
+      fullPath: '/missoes'
+      preLoaderRoute: typeof MissoesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/pro': {
+      id: '/pro'
+      path: '/pro'
+      fullPath: '/pro'
+      preLoaderRoute: typeof ProRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/questoes': {
+      id: '/questoes'
+      path: '/questoes'
+      fullPath: '/questoes'
+      preLoaderRoute: typeof QuestoesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ranking': {
+      id: '/ranking'
+      path: '/ranking'
+      fullPath: '/ranking'
+      preLoaderRoute: typeof RankingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/revisar': {
+      id: '/revisar'
+      path: '/revisar'
+      fullPath: '/revisar'
+      preLoaderRoute: typeof RevisarRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/licao/$lessonId': {
@@ -70,6 +197,12 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  DesempenhoRoute: DesempenhoRoute,
+  MissoesRoute: MissoesRoute,
+  ProRoute: ProRoute,
+  QuestoesRoute: QuestoesRoute,
+  RankingRoute: RankingRoute,
+  RevisarRoute: RevisarRoute,
   LicaoLessonIdRoute: LicaoLessonIdRoute,
 }
 export const routeTree = rootRouteImport
