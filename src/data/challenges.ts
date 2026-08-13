@@ -23,29 +23,34 @@ const LABELS = ["A", "B", "C", "D", "E"];
 function build(raw: RawChallenge[]): Challenge[] {
   const byLesson: Record<string, number> = {};
   return raw.map((c) => {
-    byLesson[c.lessonId] = (byLesson[c.lessonId] ?? 0) + 1;
-    const options: ChallengeOption[] = c.options.map((o, i) => ({
-      id: `${c.id}-${LABELS[i].toLowerCase()}`,
-      challengeId: c.id,
-      label: LABELS[i],
-      text: o.text,
-      isCorrect: Boolean(o.correct),
-      rationale: o.rationale,
-    }));
+    const order = (byLesson[c.lessonId] ?? 0) + 1;
+    byLesson[c.lessonId] = order;
+    const options: ChallengeOption[] = c.options.map((o, i) => {
+      const label = LABELS[i] ?? String(i + 1);
+      return {
+        id: `${c.id}-${label.toLowerCase()}`,
+        challengeId: c.id,
+        label,
+        text: o.text,
+        isCorrect: Boolean(o.correct),
+        ...(o.rationale ? { rationale: o.rationale } : {}),
+      };
+    });
     return {
       id: c.id,
       lessonId: c.lessonId,
-      type: "multipleChoice",
-      order: byLesson[c.lessonId],
+      type: "multipleChoice" as const,
+      order,
       difficulty: c.difficulty,
-      vignette: c.vignette,
-      vitals: c.vitals,
+      ...(c.vignette ? { vignette: c.vignette } : {}),
+      ...(c.vitals ? { vitals: c.vitals } : {}),
       question: c.question,
       explanation: c.explanation,
-      clinicalPearl: c.clinicalPearl,
+      ...(c.clinicalPearl ? { clinicalPearl: c.clinicalPearl } : {}),
       options,
-    } satisfies Challenge;
+    };
   });
+
 }
 
 export const challenges: Challenge[] = build([
