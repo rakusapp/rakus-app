@@ -1,14 +1,13 @@
-import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import { Check, Flame, Lock, Play, Sparkles, Stethoscope } from "lucide-react";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { Flame, Sparkles, Stethoscope } from "lucide-react";
 
 import { AppShell } from "@/components/rakus/app-shell";
+import { UnitSection } from "@/components/rakus/learning-path";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { lessons } from "@/data/lessons";
 import { specialties, units } from "@/data/specialties";
-import { cn } from "@/lib/utils";
 import { useProgress } from "@/state/progress";
-import type { LessonStatus } from "@/types/learning";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -28,40 +27,6 @@ export const Route = createFileRoute("/")({
   }),
   component: LearnPage,
 });
-
-const statusStyles: Record<LessonStatus, string> = {
-  completed: "border-success/40 bg-success-soft",
-  current: "border-primary bg-card shadow-raise ring-2 ring-primary/25",
-  available: "border-border bg-card",
-  locked: "border-border bg-muted/60",
-};
-
-function StatusIcon({ status }: { status: LessonStatus }) {
-  const base = "flex size-11 shrink-0 items-center justify-center rounded-2xl";
-  if (status === "completed")
-    return (
-      <span className={cn(base, "bg-success text-success-foreground")}>
-        <Check className="size-5" />
-      </span>
-    );
-  if (status === "current")
-    return (
-      <span className={cn(base, "bg-primary text-primary-foreground")}>
-        <Play className="size-5" />
-      </span>
-    );
-  if (status === "available")
-    return (
-      <span className={cn(base, "border-2 border-dashed border-primary/40 text-primary")}>
-        <Stethoscope className="size-5" />
-      </span>
-    );
-  return (
-    <span className={cn(base, "bg-secondary text-muted-foreground")}>
-      <Lock className="size-4" />
-    </span>
-  );
-}
 
 function LearnPage() {
   const { progress, getLessonStatus, currentLessonId, completionPercent } = useProgress();
@@ -131,62 +96,24 @@ function LearnPage() {
         ) : null}
       </section>
 
-      <section className="mt-8">
-        <div className="flex items-baseline justify-between">
-          <h2 className="text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground">
-            {unit.title}
-          </h2>
-          <span className="text-xs text-muted-foreground">{unit.description}</span>
-        </div>
-
-        <ol className="relative mt-4 space-y-3 before:absolute before:left-[34px] before:top-4 before:bottom-4 before:w-px before:bg-border">
-          {orderedLessons.map((lesson) => {
-            const status = getLessonStatus(lesson.id);
-            const locked = status === "locked";
-            const record = progress.lessons[lesson.id];
-            const content = (
-              <div
-                className={cn(
-                  "relative flex items-center gap-4 rounded-2xl border-2 p-4 transition-all",
-                  statusStyles[status],
-                  !locked && "hover:shadow-raise",
-                )}
-              >
-                <StatusIcon status={status} />
-                <div className="min-w-0 flex-1">
-                  <p className={cn("truncate font-semibold", locked && "text-muted-foreground")}>
-                    {lesson.title}
-                  </p>
-                  <p className="truncate text-xs text-muted-foreground">{lesson.subtitle}</p>
-                </div>
-                {status === "current" ? (
-                  <span className="rounded-full bg-primary px-3 py-1 text-xs font-semibold text-primary-foreground">
-                    Atual
-                  </span>
-                ) : status === "completed" && record ? (
-                  <span className="text-xs font-medium tabular-nums text-success">
-                    {record.bestScore}/{record.totalQuestions}
-                  </span>
-                ) : null}
-              </div>
-            );
-
-            return (
-              <li key={lesson.id} className="relative">
-                {locked ? (
-                  <div aria-disabled className="cursor-not-allowed opacity-70">
-                    {content}
-                  </div>
-                ) : (
-                  <Link to="/licao/$lessonId" params={{ lessonId: lesson.id }} className="block">
-                    {content}
-                  </Link>
-                )}
-              </li>
-            );
-          })}
-        </ol>
-      </section>
+      <UnitSection
+        title={unit.title}
+        description={unit.description}
+        lessons={orderedLessons.map((lesson) => {
+          const state = getLessonStatus(lesson.id);
+          const record = progress.lessons[lesson.id];
+          return {
+            id: lesson.id,
+            title: lesson.title,
+            description: lesson.subtitle,
+            state,
+            score:
+              state === "completed" && record
+                ? `${record.bestScore}/${record.totalQuestions}`
+                : undefined,
+          };
+        })}
+      />
     </AppShell>
   );
 }
