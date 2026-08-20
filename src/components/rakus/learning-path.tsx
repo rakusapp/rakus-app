@@ -72,7 +72,7 @@ function LessonRow({ lesson, index }: { lesson: PathLesson; index: number }) {
 
   return (
     <li
-      className={cn("flex", labelSide === "right" ? "justify-start" : "justify-end")}
+      className={cn("flex", level === 0 ? "justify-center" : labelSide === "right" ? "justify-start" : "justify-end")}
       style={{ transform: `translateX(calc(var(--step) * ${level}))` }}
     >
       {locked ? (

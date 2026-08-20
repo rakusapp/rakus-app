@@ -29,14 +29,14 @@ export function LessonLabel({
     >
       <p
         className={cn(
-          "truncate text-sm font-semibold sm:text-base",
+          "text-sm font-semibold leading-snug sm:text-base",
           status === "locked" && "text-muted-foreground",
         )}
       >
         {title}
       </p>
       {description ? (
-        <p className="truncate text-xs text-muted-foreground">{description}</p>
+        <p className="text-xs leading-snug text-muted-foreground">{description}</p>
       ) : null}
       {score ? (
         <p className="mt-0.5 text-xs font-medium tabular-nums text-success">{score}</p>
