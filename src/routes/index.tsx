@@ -1,14 +1,13 @@
-import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import { Check, Flame, Lock, Play, Sparkles, Stethoscope } from "lucide-react";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { Flame, Sparkles, Stethoscope } from "lucide-react";
 
 import { AppShell } from "@/components/rakus/app-shell";
+import { UnitSection } from "@/components/rakus/learning-path";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { lessons } from "@/data/lessons";
 import { specialties, units } from "@/data/specialties";
-import { cn } from "@/lib/utils";
 import { useProgress } from "@/state/progress";
-import type { LessonStatus } from "@/types/learning";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -28,40 +27,6 @@ export const Route = createFileRoute("/")({
   }),
   component: LearnPage,
 });
-
-const statusStyles: Record<LessonStatus, string> = {
-  completed: "border-success/40 bg-success-soft",
-  current: "border-primary bg-card shadow-raise ring-2 ring-primary/25",
-  available: "border-border bg-card",
-  locked: "border-border bg-muted/60",
-};
-
-function StatusIcon({ status }: { status: LessonStatus }) {
-  const base = "flex size-11 shrink-0 items-center justify-center rounded-2xl";
-  if (status === "completed")
-    return (
-      <span className={cn(base, "bg-success text-success-foreground")}>
-        <Check className="size-5" />
-      </span>
-    );
-  if (status === "current")
-    return (
-      <span className={cn(base, "bg-primary text-primary-foreground")}>
-        <Play className="size-5" />
-      </span>
-    );
-  if (status === "available")
-    return (
-      <span className={cn(base, "border-2 border-dashed border-primary/40 text-primary")}>
-        <Stethoscope className="size-5" />
-      </span>
-    );
-  return (
-    <span className={cn(base, "bg-secondary text-muted-foreground")}>
-      <Lock className="size-4" />
-    </span>
-  );
-}
 
 function LearnPage() {
   const { progress, getLessonStatus, currentLessonId, completionPercent } = useProgress();
