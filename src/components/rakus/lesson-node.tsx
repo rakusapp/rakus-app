@@ -5,8 +5,8 @@ import type { LessonStatus } from "@/types/learning";
 
 interface LessonNodeProps {
   status: LessonStatus;
-  progressPercentage?: number;
-  className?: string;
+  progressPercentage?: number | undefined;
+  className?: string | undefined;
 }
 
 const stateStyles: Record<LessonStatus, string> = {

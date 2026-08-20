@@ -3,11 +3,11 @@ import type { LessonStatus } from "@/types/learning";
 
 interface LessonLabelProps {
   title: string;
-  description?: string;
+  description?: string | undefined;
   status: LessonStatus;
-  align?: "left" | "right";
-  score?: string;
-  className?: string;
+  align?: "left" | "right" | undefined;
+  score?: string | undefined;
+  className?: string | undefined;
 }
 
 /** Compact text block that belongs to a node — no card, no borders. */

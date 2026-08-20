@@ -8,10 +8,10 @@ import type { Lesson, LessonStatus } from "@/types/learning";
 export interface PathLesson {
   id: string;
   title: string;
-  description?: string;
+  description?: string | undefined;
   state: LessonStatus;
-  progressPercentage?: number;
-  score?: string;
+  progressPercentage?: number | undefined;
+  score?: string | undefined;
 }
 
 /** center → right → far right → center → left → far left → center */
