@@ -33,6 +33,7 @@ function LessonPage() {
   const { completeLesson } = useProgress();
   const [result, setResult] = useState<LessonRunnerResult | null>(null);
   const [reviewing, setReviewing] = useState(false);
+  const [reviewResult, setReviewResult] = useState<LessonRunnerResult | null>(null);
 
   const lesson = lessons.find((l) => l.id === lessonId);
   const unit = units.find((u) => u.id === lesson?.unitId);
@@ -51,6 +52,21 @@ function LessonPage() {
     );
   }
 
+  if (reviewResult) {
+    return (
+      <LessonResult
+        variant="review"
+        lessonTitle={`Revisão de erros · ${lesson.title}`}
+        correct={reviewResult.correct}
+        total={reviewResult.total}
+        xpEarned={reviewResult.correct * XP_PER_CORRECT}
+        hasMistakes={false}
+        onReviewMistakes={() => undefined}
+        onContinue={() => navigate({ to: "/" })}
+      />
+    );
+  }
+
   if (reviewing && result) {
     const wrongIds = new Set(result.attempts.filter((a) => !a.isCorrect).map((a) => a.challengeId));
     const wrongChallenges = challenges.filter((c) => wrongIds.has(c.id));
@@ -61,7 +77,7 @@ function LessonPage() {
         subtitle={lesson.title}
         challenges={wrongChallenges}
         exitTo="/"
-        onFinish={() => navigate({ to: "/" })}
+        onFinish={(r) => setReviewResult(r)}
       />
     );
   }
