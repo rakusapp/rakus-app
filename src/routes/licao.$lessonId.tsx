@@ -33,6 +33,7 @@ function LessonPage() {
   const { completeLesson } = useProgress();
   const [result, setResult] = useState<LessonRunnerResult | null>(null);
   const [reviewing, setReviewing] = useState(false);
+  const [reviewResult, setReviewResult] = useState<LessonRunnerResult | null>(null);
 
   const lesson = lessons.find((l) => l.id === lessonId);
   const unit = units.find((u) => u.id === lesson?.unitId);
