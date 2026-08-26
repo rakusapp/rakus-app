@@ -69,7 +69,7 @@ export function LessonResult({
           <Button onClick={onContinue} className="h-12 w-full rounded-xl text-base font-semibold">
             Continuar trilha
           </Button>
-          {hasMistakes ? (
+          {hasMistakes && !isReview ? (
             <Button
               onClick={onReviewMistakes}
               variant="outline"
